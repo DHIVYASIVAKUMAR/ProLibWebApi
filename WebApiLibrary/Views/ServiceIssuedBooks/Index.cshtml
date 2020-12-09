@@ -1,0 +1,52 @@
+﻿@model IEnumerable<WebApiLibrary.Models.ServiceIssuedBooks>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceBooks.serviceBookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceStudents.serviceStudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceFromDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceToDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceBooks.serviceBookName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceStudents.serviceStudentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceFromDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceToDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.serviceIssuedId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.serviceIssuedId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.serviceIssuedId })
+        </td>
+    </tr>
+}
+
+</table>

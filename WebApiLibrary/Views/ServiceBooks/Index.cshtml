@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebApiLibrary.Models.ServiceBooks>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceBookName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceSerialNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceAuthorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceBranch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.servicePublications)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceIsAvailable)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceBookName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceSerialNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceAuthorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceBranch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.servicePublications)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceIsAvailable)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.serviceBookId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.serviceBookId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.serviceBookId })
+        </td>
+    </tr>
+}
+
+</table>

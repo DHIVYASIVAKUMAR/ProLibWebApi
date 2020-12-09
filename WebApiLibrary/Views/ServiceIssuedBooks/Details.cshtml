@@ -1,0 +1,51 @@
+﻿@model WebApiLibrary.Models.ServiceIssuedBooks
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ServiceIssuedBooks</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.serviceBooks.serviceBookName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serviceBooks.serviceBookName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.serviceStudents.serviceStudentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serviceStudents.serviceStudentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.serviceFromDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serviceFromDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.serviceToDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serviceToDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.serviceIssuedId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

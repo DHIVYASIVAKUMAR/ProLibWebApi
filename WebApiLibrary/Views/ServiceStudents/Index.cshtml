@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebApiLibrary.Models.ServiceStudents>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceStudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceStudentBranch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceGender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.servicePhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.serviceEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.servicePassword)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceStudentName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceStudentBranch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceGender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.servicePhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.serviceEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.servicePassword)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.serviceStudentId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.serviceStudentId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.serviceStudentId })
+        </td>
+    </tr>
+}
+
+</table>
