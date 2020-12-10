@@ -1,51 +1,117 @@
-﻿@model WebApiLibrary.Models.ServiceIssuedBooks
+﻿@*@model WebApiLibrary.Models.ServiceIssuedBooks
 
+	@{
+		ViewBag.Title = "Details";
+		Layout = "~/Views/Shared/_Layout.cshtml";
+	}
+
+	<h2>Details</h2>
+
+	<div>
+		<h4>ServiceIssuedBooks</h4>
+		<hr />
+		<dl class="dl-horizontal">
+			<dt>
+				@Html.DisplayNameFor(model => model.serviceBooks.serviceBookName)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.serviceBooks.serviceBookName)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.serviceStudents.serviceStudentName)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.serviceStudents.serviceStudentName)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.serviceFromDate)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.serviceFromDate)
+			</dd>
+
+			<dt>
+				@Html.DisplayNameFor(model => model.serviceToDate)
+			</dt>
+
+			<dd>
+				@Html.DisplayFor(model => model.serviceToDate)
+			</dd>
+
+		</dl>
+	</div>
+	<p>
+		@Html.ActionLink("Edit", "Edit", new { id = Model.serviceIssuedId }) |
+		@Html.ActionLink("Back to List", "Index")
+	</p>*@
+
+@model WebApiLibrary.ViewModels.ServiceIssuedBookViewModel
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Details";
 }
 
 <h2>Details</h2>
 
 <div>
-    <h4>ServiceIssuedBooks</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceBooks.serviceBookName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serviceBooks.serviceBookName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceStudents.serviceStudentName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serviceStudents.serviceStudentName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceFromDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serviceFromDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceToDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serviceToDate)
-        </dd>
-
-    </dl>
+	<h4>IssuedBooks</h4>
+	<hr />
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceBookName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceBookName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceAuthorName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceAuthorName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceBranch)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceBranch)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.servicePublication)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.servicePublication)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceStudentName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceStudentName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceStudentEmail)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceStudentEmail)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceFromDate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceFromDate)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceToDate)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceToDate)
+		</dd>
+	</dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.serviceIssuedId }) |
-    @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Edit", "Edit", new { id = Model.serviceIssuedId }) |
+	@Html.ActionLink("Back to List", "Index")
 </p>

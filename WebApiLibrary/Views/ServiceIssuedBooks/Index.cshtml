@@ -1,52 +1,325 @@
-﻿@model IEnumerable<WebApiLibrary.Models.ServiceIssuedBooks>
+﻿@*@model IEnumerable<WebApiLibrary.Models.ServiceIssuedBooks>
+
+	@{
+		ViewBag.Title = "Index";
+		Layout = "~/Views/Shared/_Layout.cshtml";
+	}
+
+	<h2>Index</h2>
+
+	<p>
+		@Html.ActionLink("Create New", "Create")
+	</p>
+	<table class="table">
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.serviceBooks.serviceBookName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.serviceStudents.serviceStudentName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.serviceFromDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.serviceToDate)
+			</th>
+			<th></th>
+		</tr>
+
+	@foreach (var item in Model) {
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.serviceBooks.serviceBookName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.serviceStudents.serviceStudentName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.serviceFromDate)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.serviceToDate)
+			</td>
+			<td>
+				@Html.ActionLink("Edit", "Edit", new { id=item.serviceIssuedId }) |
+				@Html.ActionLink("Details", "Details", new { id=item.serviceIssuedId }) |
+				@Html.ActionLink("Delete", "Delete", new { id=item.serviceIssuedId })
+			</td>
+		</tr>
+	}
+
+	</table>*@
+
+@model IEnumerable<WebApiLibrary.ViewModels.ServiceIssuedBookViewModel>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Index";
 }
+<center><h2>Issued Book Details</h2></center>
 
-<h2>Index</h2>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Books/BookCreate.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.3.2/css/fixedColumns.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+<style type="text/css">
+	thead input {
+		width: 100%;
+	}
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceBooks.serviceBookName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceStudents.serviceStudentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceFromDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceToDate)
-        </th>
-        <th></th>
-    </tr>
+	table.dataTable {
+		margin-top: 2em !important;
+		margin-bottom: 2em !important;
+	}
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceBooks.serviceBookName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceStudents.serviceStudentName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceFromDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceToDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.serviceIssuedId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.serviceIssuedId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.serviceIssuedId })
-        </td>
-    </tr>
-}
+		table.dataTable tbody tr.odd {
+			background-color: lavender !important;
+		}
 
+		table.dataTable tbody tr.even {
+			background-color: white !important;
+		}
+
+	.table th, .table td {
+		text-align: center;
+	}
+
+	#bookTable {
+		width: 100% !important;
+		border: 1px solid black;
+	}
+
+	#bookTable_wrapper {
+		padding-top: 20px;
+	}
+
+	#bookTable_length {
+		padding-bottom: 15px;
+	}
+
+	a, a:hover {
+		color: white;
+	}
+
+	.wrapper {
+		display: inline-block;
+		vertical-align: top;
+	}
+</style>
+
+<div class="modal fade" id="successModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">Action</h2>
+			</div>
+			<div class="modal-body">
+				<p>Success... Book Returned ! </p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="btnOk" onclick="btnOk()">Ok</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="returnModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">Return</h2>
+			</div>
+			<div class="modal-body">
+				<h3>Confirming Book Return  ?</h3>
+			</div>
+			<div class="modal-footer">
+				<div class="btn-group">
+					<a href="#" id="btnReturn" class="btn btn-primary " style="margin-right:5px"> Yes </a>
+					<a href="#" id="btnCancel" class="btn btn-primary "> Cancel </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<table class="table display-1 table-condensed " id="bookTable">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayName("Book Name")
+			</th>
+			<th>
+				@Html.DisplayName("Author Name")
+			</th>
+			<th>
+				@Html.DisplayName("Branch")
+			</th>
+			<th>
+				@Html.DisplayName("Publication")
+			</th>
+			<th>
+				@Html.DisplayName("Student")
+			</th>
+			<th>
+				@Html.DisplayName("Email")
+			</th>
+			<th>
+				@Html.DisplayName("From Date")
+			</th>
+			<th>
+				@Html.DisplayName("To Date")
+			</th>
+			<th>Edit</th>
+			@*<th>Details</th>*@
+			<th>Return</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.serviceBookName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.serviceAuthorName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.serviceBranch)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.servicePublication)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.serviceStudentName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.serviceStudentEmail)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.serviceDisplayFromDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.serviceDisplayToDate)
+				</td>
+				<td>
+					<div class="btn-group">
+						<button type="button" class="btn btn-outline-primary  wrapper" id="showModal" onclick="location.href='@Url.Action("Edit", "ServiceIssuedBooks",new { id = item.serviceIssuedId })'">
+							<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+								<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+							</svg>
+						</button>
+					</div>
+				</td>
+				<td>
+					<button type="button" class="btn btn-primary  wrapper" id="showModal" onclick="Confirm(@item.serviceBookId,@item.serviceIssuedId)">Return</button>
+				</td>
+				@*<td>
+						<button class="btn btn-primary">@Html.ActionLink("Edit", "Edit", new { id = item.issuedId }, new { @style = "color:#FFFFFF;" })</button>
+					</td>
+					<td>
+						<button class="btn btn-primary">@Html.ActionLink("Details", "Details", new { id = item.issuedId }, new { @style = "color:#FFFFFF;" })</button>
+					</td>
+					<td>
+						<a href="#" id="showModal" class="btn btn-danger" onclick="Confirm(@item.bookId,@item.issuedId)">Return</a>
+					</td>*@
+			</tr>
+		}
+	</tbody>
 </table>
+<input type="hidden" id="selectBookId" />
+<input type="hidden" id="selectIssuedBookId" />
+
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script>
+	$(document).ready(function () {
+		$('#bookTable thead tr').clone(true).appendTo('#bookTable thead');
+		$('#bookTable thead tr:eq(1) th').each(function (i) {
+			var title = $(this).text();
+			if (title != "Edit" && i < 6) {
+				$(this).html('<input type="text" class="fas" placeholder="&#xf0b0; filter">');
+				$('input', this).on('change', function () {
+					if (table.column(i).search() !== this.value) {
+						table
+							.column(i)
+							.search(this.value)
+							.draw();
+					}
+				});
+			}
+			//else if (title != "Edit" && i == 6 || i == 7) {
+			//	$(this).html('<input type="Date" data-date-format="MM DD YYYY" class="fas" placeholder="&#xf0b0; filter">');
+			//	$('input', this).on('keyup change', function () {
+			//		if (table.column(i).search() !== this.value) {
+			//			table
+			//				.column(i)
+			//				.search(this.value)
+			//				.draw();
+			//		}
+			//	});
+			//}
+			else if (title != "Edit" && i == 6 || i == 7) {
+				$(this).html('<input type="Date" data-date-format="MM DD YYYY" class="fas" placeholder="&#xf0b0; filter">');
+				$('input', this).on('keyup change', function () {
+				var dateString = this.value;
+				var splitDate = dateString.split('-');
+				var year = splitDate[0];
+				var month = splitDate[1];
+				var day = splitDate[2];
+				var formatedDate = month +'/'+ day+ '/'+ year;
+					//alert(this.value);
+					if (table.column(i).search() !== formatedDate) {
+						table
+							.column(i)
+							.search(formatedDate)
+							.draw();
+					}
+				});
+			}
+			else {
+				$(this).html('');
+			}
+		});
+
+		var table = $('#bookTable').DataTable({
+			orderCellsTop: true,
+			fixedHeader: true
+		});
+
+		$('#btnCancel').click(function () {
+			location.reload();
+		});
+
+		$('#btnOk').click(function () {
+			location.reload();
+		});
+
+		$('#btnReturn').click(function () {
+			var returnBookIdValue = $("#selectBookId").val();
+
+	    $.ajax({
+			type: "POST",
+			url: '@Url.Action("Return")',
+			data: { bookId: returnBookIdValue, issuedBookId: $("#selectIssuedBookId").val()},
+			success: function (result) {
+			  if (result) {
+			    $("#returnModal").modal("hide");
+				$("#selectbookId").val(null);
+				$("#successModal").modal('show');
+			  }
+			  else {
+				alert("something went wrong");
+			  }
+			}
+		});
+		});
+	});
+	function Confirm(bookId,issuedBookId) {
+		$("#selectBookId").val(bookId);
+		$("#selectIssuedBookId").val(issuedBookId);
+		$("#returnModal").modal('show');
+	}
+</script>

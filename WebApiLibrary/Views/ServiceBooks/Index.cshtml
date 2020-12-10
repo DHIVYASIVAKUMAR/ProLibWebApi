@@ -1,64 +1,218 @@
 ﻿@model IEnumerable<WebApiLibrary.Models.ServiceBooks>
-
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Index";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Books/BookCreate.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.3.2/css/fixedColumns.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+<style>
+	.page-title {
+		/*background: purple;*/
+		overflow: hidden;
+	}
+
+	div h2 {
+		text-align: center;
+		display: inline-block;
+		width: 100%;
+		margin-right: -50%;
+	}
+
+	.titile-button {
+		float: right;
+		margin-left: 450px !important;
+	}
+</style>
+<div class="page-title">
+	<h2>List of Books</h2>
+	<button class="btn btn-primary title-button" style="margin-left:450px">@Html.ActionLink("Create New", "Create")</button>
+</div>
+<div class="modal fade" id="successModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">Action</h2>
+			</div>
+			<div class="modal-body">
+				<p>Success ! </p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="btnOk" onclick="btnOk()">Ok</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="deleteModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">Confirm</h2>
+			</div>
+			<div class="modal-body">
+				<h3>Confirming Deletion?</h3>
+			</div>
+			<div class="modal-footer">
+				<div class="btn-group">
+					<a href="#" id="btnDelete" class="btn btn-primary " style="margin-right:5px" onclick="btnDelete()"> Delete </a>
+					<a href="#" id="btnCancel" class="btn btn-primary " onclick="btnCancel()"> Cancel </a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div>
+	<table id="bookTable" class="table display table-condensed">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceBookName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceAuthorName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceSerialNumber)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceBranch)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.servicePublications)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceIsAvailable)
+				</th>
+				<th>Actions</th>
+				<th></th>
+				@*<th>Edit</th>
+					<th>Details</th>
+					<th>Delete</th>
+					<th>Issues</th>*@
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.serviceBookName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.serviceAuthorName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.serviceSerialNumber)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.serviceBranch)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.servicePublications)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.serviceIsAvailable)
+					</td>
+					<td>
+						<div class="btn-group">
+							<button type="button" class="btn btn-outline-primary  wrapper" id="showModal" onclick="location.href='@Url.Action("Edit", "ServiceBooks", new { id = item.serviceBookId })'">
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+								</svg>
+							</button>
+							<button type="button" class="btn btn-outline-primary  wrapper" id="showModal" onclick="Confirm(@item.serviceBookId)">
+								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+									<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+									<path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+								</svg>
+							</button>
+						</div>
+					</td>					
+					<td>
+						@if (item.serviceIsAvailable)
+						{
+							<a href='@Url.Action("Create", "ServiceIssuedBooks",new { id = @item.serviceBookId})' class="btn btn-primary">Issue</a>
+						}
+						else
+						{
+							<button class="btn btn-primary" id="btnIssue" disabled>Issue</button>
+						}
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<input type="hidden" id="selectBookId" />
+
+@section scripts{
+	<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	<script>
+	$(document).ready(function () {
+		$('#bookTable thead tr').clone(true).appendTo('#bookTable thead');
+		$('#bookTable thead tr:eq(1) th').each(function (i) {
+			var title = $(this).text();
+			if (title != "Issues" && title != "Delete" && title != "Details" && title != "Edit" && i < 5) {
+				$(this).html('<input type="text" class="fas" placeholder="&#xf0b0; filter">');
+				$('input', this).on('keyup change', function () {
+					if (table.column(i).search() !== this.value) {
+						table
+							.column(i)
+							.search(this.value)
+							.draw();
+					}
+				});
+			}
+			else {
+				$(this).html('');
+			}
+		});
+
+		var table = $('#bookTable').DataTable({
+			orderCellsTop: true,
+			fixedHeader: true
+		});
+	});
+		function btnDelete() {
+		var deleteBookIdValue = $("#selectBookId").val();
+
+	    $.ajax({
+			type: "POST",
+			url: '@Url.Action("Delete")',
+			data: { id: deleteBookIdValue },
+			success: function (result) {
+			  if (result) {
+			    $("#deleteModal").modal("hide");
+				  $("#selectbookId").val(null);
+				$("#successModal").modal('show');
+			  }
+			  else {
+				alert("something went wrong");
+			  }
+			}
+		});
+		}
+
+		function btnCancel() {
+			window.location.href = "";
+		}
+
+		function btnOk() {
+			location.reload();
+		}
+
+		function Confirm(id) {
+			$("#selectBookId").val(id);
+			$("#deleteModal").modal('show');
+		}
+
+	</script>
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceBookName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceSerialNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceAuthorName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceBranch)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.servicePublications)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.serviceIsAvailable)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceBookName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceSerialNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceAuthorName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceBranch)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.servicePublications)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.serviceIsAvailable)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.serviceBookId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.serviceBookId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.serviceBookId })
-        </td>
-    </tr>
-}
-
-</table>

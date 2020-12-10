@@ -1,83 +1,98 @@
 ﻿@model WebApiLibrary.Models.ServiceStudents
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Details";
 }
+<center><h2> Student Detail</h2></center>
+<style>
+	a, a:hover {
+		color: white;
+	}
 
-<h2>Details</h2>
+	.details {
+		padding-left: 400px;
+	}
 
-<div>
-    <h4>ServiceStudents</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceStudentName)
-        </dt>
+	h2 {
+		padding-bottom: 50px;
+	}
 
-        <dd>
-            @Html.DisplayFor(model => model.serviceStudentName)
-        </dd>
+	dd a, dd a:hover {
+		color: dodgerblue;
+	}
 
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceStudentBranch)
-        </dt>
+	dd, dt {
+		font-size: 20px;
+		padding-bottom: 11px;
+	}
 
-        <dd>
-            @Html.DisplayFor(model => model.serviceStudentBranch)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceGender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serviceGender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.servicePhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.servicePhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serviceAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceCity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serviceCity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.serviceEmail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serviceEmail)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.servicePassword)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.servicePassword)
-        </dd>
-
-    </dl>
+	dl dd {
+		padding-left: 20px;
+	}
+</style>
+<div class="details">
+	<dl class="dl-horizontal">
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceStudentName)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceStudentName)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceStudentBranch)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceStudentBranch)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceGender)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceGender)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.servicePhoneNumber)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.servicePhoneNumber)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceAddress)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceAddress)
+		</dd>
+		<dt>
+			@Html.DisplayNameFor(model => model.serviceCity)
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceCity)
+		</dd>
+		<dt>
+			<label>Email</label>
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.serviceEmail)
+		</dd>
+		<dt>
+			<label>Password</label>
+		</dt>
+		<dd>
+			@Html.DisplayFor(model => model.servicePassword)  
+		</dd>
+	</dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.serviceStudentId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@*<p>
+		@Html.ActionLink("Edit", "Edit", new { id = Model.studentId }) |
+		@Html.ActionLink("Back to List", "Index")
+	</p>*@
+<table class="details">
+	<tr>
+		<td style="padding-left: 500px;padding-right: 15px;">
+			<button class="btn btn-primary">@Html.ActionLink("Back to List", "Index", new { @style = "color:#FFFFFF;" })</button>
+		</td>
+		<td>
+			<button class="btn btn-primary">@Html.ActionLink("Edit", "Edit", new { @style = "color:#FFFFFF;" })</button>
+		</td>
+	</tr>
+</table>

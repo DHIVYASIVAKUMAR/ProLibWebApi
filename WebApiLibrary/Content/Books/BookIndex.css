@@ -1,0 +1,20 @@
+﻿
+#createFormId {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+table.dataTable {
+	margin-top: 2em !important;
+	margin-bottom: 2em !important;
+}
+
+	table.dataTable tbody tr.odd {
+		background-color: lavender !important;
+	}
+
+	table.dataTable tbody tr.even {
+		background-color: white !important;
+	}

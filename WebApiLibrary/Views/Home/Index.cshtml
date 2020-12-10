@@ -1,31 +1,58 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+	ViewBag.Title = "Home Page";
 }
+<style>
+	.container {
+		margin-left: 0px;
+		padding-left: 0px;
+		padding-right: 0px;
+		margin-right: 0px;
+	}
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+	img {
+		height: 700px;
+		width: 135%;
+	}
+</style>
+
+<div class="first-container">
+	<img src="https://media.architecturaldigest.com/photos/55e762d8302ba71f30163466/master/w_1600%2Cc_limit/dam-images-decor-libraries-library-03-simon-jacobsen.jpg" />
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<center>
+	<div id="showWeather">
+		<h2>Weather Details</h2>
+		<button id="btn-weather">Get Weather</button>
+		<div>
+			<p id="name"> </p>
+			<p id="main"></p>
+			<p id="temp"> </p>
+			<p id="humidity"></p>
+			<p id="pressure"> </p>
+			<p id="speed"></p>
+
+		</div>
+
+		<p></p>
+		<p></p>
+	</div>
+</center>
+
+<script>
+	$(document).ready(function () {
+		$("#btn-weather").click(function () {
+
+			$.get('https://api.openweathermap.org/data/2.5/weather?q=Chennai&appid=f6a6648576467ea18320d165880ab133',function(response) {
+				console.log(response);
+				$('#name').text("Weather in "+ response.name);
+				$("#main").text(response.weather[0].main);
+				var temp = response.main.temp - 273.15;
+				$('#temp').text("Temperature : " + temp + " °C");
+				$('#humidity').text("Humidity : "+response.main.humidity + " % ");
+				$('#pressure').text(" Pressure : "+response.main.pressure + " hPa ");
+				$("#speed").text("Wind " + response.wind.speed + " m/s speed ");
+			});
+		});
+	});
+
+</script>

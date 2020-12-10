@@ -1,65 +1,215 @@
-﻿@model WebApiLibrary.Models.ServiceIssuedBooks
+﻿@model IEnumerable<WebApiLibrary.Models.ServiceStudents>
 
 @{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "create";
 }
+<center><h2>Book Issue</h2></center>
 
-<h2>Create</h2>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Books/BookCreate.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.3.2/css/fixedColumns.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+<style type="text/css">
+	thead input {
+		width: 100%;
+	}
 
+	table.dataTable {
+		margin-top: 2em !important;
+		margin-bottom: 2em !important;
+	}
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ServiceIssuedBooks</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.bookId, "bookId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("bookId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.bookId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+		table.dataTable tbody tr.odd {
+			background-color: lavender !important;
+		}
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.studentId, "studentId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("studentId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.studentId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+		table.dataTable tbody tr.even {
+			background-color: white !important;
+		}
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.serviceFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.serviceFromDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.serviceFromDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+	.table th, .table td {
+		text-align: center;
+	}
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.serviceToDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.serviceToDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.serviceToDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
+	#studentTable {
+		width: 100% !important;
+		border: 1px solid black;
+	}
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+	#studentTable_wrapper {
+		padding-top: 20px;
+	}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+	#studentTable_length {
+		padding-bottom: 15px;
+	}
+</style>
+
+<div class="modal fade" id="successModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Action</h2>
+			</div>
+			<div class="modal-body">
+				<h2> Issued Success !</h2>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary">@Html.ActionLink("OK", "Index", "ServiceBooks", new { @style = "color:#FFFFFF;" })</button>
+				<button type="button" id="btnOk" class="btn btn-default">Ok</button>
+			</div>
+		</div>
+	</div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+<div class="modal fade" id="issueModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>Book Issue</h4>
+			</div>
+			<div class="modal-body">
+				<div>
+					<label>Book Name:</label>  @ViewBag.bookName
+					<hr />
+					<label>Author Name:</label>  @ViewBag.authorName
+					<hr />
+					<label>From date : </label>
+					<input type="date" id="fromDate" />
+					<hr />
+					<label>To date : </label>
+					<input type="date" id="toDate" />
+				</div>
+				<h3>Do you Want To Issue this Book ? </h3>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" id="btnIssue">Issue</button>
+				<button class="btn btn-primary" id="btnCancel">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div>
+	<table class="table display table-condensed" id="studentTable">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceStudentName)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceStudentBranch)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceGender)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.servicePhoneNumber)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.serviceEmail)
+				</th>
+				<th>Select</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						@Html.DisplayFor(modelItem => item.serviceStudentName)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.serviceStudentBranch)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.serviceGender)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.servicePhoneNumber)
+					</td>
+					<td class="email">
+						@Html.DisplayFor(modelItem => item.serviceEmail)
+					</td>
+					<td>
+						<a href="#" id="showModal" class="btn btn-danger" onclick="Confirm(@item.serviceStudentId)">Select</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+
+
+<input type="hidden" id="selectStudentId" />
+
+@section scripts{
+	<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#studentTable thead tr').clone(true).appendTo('#studentTable thead');
+			$('#studentTable thead tr:eq(1) th').each(function (i) {
+				var title = $(this).text();
+				if (title != "Select") {
+					$(this).html('<input type="text" class="fas" placeholder="&#xf0b0; filter">');
+					$('input', this).on('keyup change', function () {
+						if (table.column(i).search() !== this.value) {
+							table
+								.column(i)
+								.search(this.value)
+								.draw();
+						}
+					});
+				}
+				else {
+					$(this).html('');
+				}
+			});
+
+			var table = $('#studentTable').DataTable({
+				orderCellsTop: true,
+				fixedHeader: true
+			});
+
+
+			$('#btnOk').click(function () {
+				location.reload();
+			});
+
+			$('#btnCancel').click(function () {
+				location.reload();
+			});
+
+			$('#btnIssue').click(function () {
+				var data = {
+					'bookId':@ViewBag.bookId,
+					'studentId': $('#selectStudentId').val(),
+					'serviceFromDate': $('#fromDate').val(),
+					'serviceTodate':$('#toDate').val()
+				}
+
+				$.ajax({
+					type: "POST",
+					url: '@Url.Action("BookIssue")',
+					data: data,
+					success: function (result) {
+						if (result) {
+							$('#issueModal').modal('hide');
+							$('#selectStudentId').val(null);
+							$('#successModal').modal('show')
+						}
+						else {
+							alert("Something Went Wrong ");
+						}
+					}
+				});
+			});
+		});
+		function Confirm(id) {
+			$('#selectStudentId').val(id);
+			$('#issueModal').modal('show');
+		}
+	</script>
 }
+

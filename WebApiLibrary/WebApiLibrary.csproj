@@ -146,12 +146,18 @@
       <DependentUpon>202012091321572_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="ServiceMigrations\Configuration.cs" />
+    <Compile Include="ViewModels\ServiceBooksViewModel.cs" />
+    <Compile Include="ViewModels\ServiceIssuedBookViewModel.cs" />
+    <Compile Include="ViewModels\ServiceStudentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Books\BookCreate.css" />
+    <Content Include="Content\Books\BookIndex.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Navbar\NavBar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -201,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
