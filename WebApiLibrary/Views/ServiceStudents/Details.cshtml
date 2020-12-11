@@ -33,52 +33,60 @@
 <div class="details">
 	<dl class="dl-horizontal">
 		<dt>
-			@Html.DisplayNameFor(model => model.serviceStudentName)
+			<lable>Name</lable>
 		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.serviceStudentName)
+		<dd id="name">
+			@*
+		@Html.DisplayFor(model => model.serviceStudentName)*@
 		</dd>
 		<dt>
-			@Html.DisplayNameFor(model => model.serviceStudentBranch)
+			<label>Branch</label>
 		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.serviceStudentBranch)
+		<dd id="branch">
+			@*
+		@Html.DisplayFor(model => model.serviceStudentBranch)*@
 		</dd>
 		<dt>
-			@Html.DisplayNameFor(model => model.serviceGender)
+			<label>Gender</label>
 		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.serviceGender)
+		<dd id="gender">
+			@*
+		@Html.DisplayFor(model => model.serviceGender)*@
 		</dd>
 		<dt>
-			@Html.DisplayNameFor(model => model.servicePhoneNumber)
+			<label>Phone Number</label>
 		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.servicePhoneNumber)
+		<dd id="phoneNumber">
+			@*
+		@Html.DisplayFor(model => model.servicePhoneNumber)*@
 		</dd>
 		<dt>
-			@Html.DisplayNameFor(model => model.serviceAddress)
+			<label>Address</label>
 		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.serviceAddress)
+		<dd id="address">
+			@*
+		@Html.DisplayFor(model => model.serviceAddress)*@
 		</dd>
 		<dt>
-			@Html.DisplayNameFor(model => model.serviceCity)
+			<label>City</label>
 		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.serviceCity)
+		<dd id="city">
+			@*
+		@Html.DisplayFor(model => model.serviceCity)*@
 		</dd>
 		<dt>
 			<label>Email</label>
 		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.serviceEmail)
+		<dd id="email">
+			@*
+		@Html.DisplayFor(model => model.serviceEmail)*@
 		</dd>
 		<dt>
 			<label>Password</label>
 		</dt>
-		<dd>
-			@Html.DisplayFor(model => model.servicePassword)  
+		<dd id="password">
+			@*
+		@Html.DisplayFor(model => model.servicePassword)*@
 		</dd>
 	</dl>
 </div>
@@ -96,3 +104,26 @@
 		</td>
 	</tr>
 </table>
+<script>
+	$(document).ready(function () {
+		$.get('https://localhost:44369/api/ServiceStudents/' +@Model.serviceStudentId, function (response) {
+			console.log(response);
+			$('#name').text(response.serviceStudentName);
+			$('#branch').text(response.serviceStudentBranch);
+			if (response.serviceGender == 0) {
+				$('#gender').text("Female");
+			}
+			else if (response.serviceGender == 1) {
+				$('#gender').text("Male");
+			}
+			else {
+				$('#gender').text("Genderless");
+			}			
+			$('#phoneNumber').text(response.servicePhoneNumber);
+			$('#address').text(response.serviceAddress);
+			$('#city').text(response.serviceCity);
+			$('#email').text(response.serviceEmail);
+			$('#password').text(response.servicePassword);
+		})
+	});
+</script>

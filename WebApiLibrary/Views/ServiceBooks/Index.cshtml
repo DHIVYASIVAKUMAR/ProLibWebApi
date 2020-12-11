@@ -155,63 +155,63 @@
 	<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	<script>
-	$(document).ready(function () {
-		$('#bookTable thead tr').clone(true).appendTo('#bookTable thead');
-		$('#bookTable thead tr:eq(1) th').each(function (i) {
-			var title = $(this).text();
-			if (title != "Issues" && title != "Delete" && title != "Details" && title != "Edit" && i < 5) {
-				$(this).html('<input type="text" class="fas" placeholder="&#xf0b0; filter">');
-				$('input', this).on('keyup change', function () {
-					if (table.column(i).search() !== this.value) {
-						table
-							.column(i)
-							.search(this.value)
-							.draw();
-					}
-				});
-			}
-			else {
-				$(this).html('');
-			}
-		});
+		$(document).ready(function () {
+			$('#bookTable thead tr').clone(true).appendTo('#bookTable thead');
+			$('#bookTable thead tr:eq(1) th').each(function (i) {
+				var title = $(this).text();
+				if (title != "Issues" && title != "Delete" && title != "Details" && title != "Edit" && i < 5) {
+					$(this).html('<input type="text" class="fas" placeholder="&#xf0b0; filter">');
+					$('input', this).on('keyup change', function () {
+						if (table.column(i).search() !== this.value) {
+							table
+								.column(i)
+								.search(this.value)
+								.draw();
+						}
+					});
+				}
+				else {
+					$(this).html('');
+				}
+			});
 
-		var table = $('#bookTable').DataTable({
-			orderCellsTop: true,
-			fixedHeader: true
+			var table = $('#bookTable').DataTable({
+				orderCellsTop: true,
+				fixedHeader: true
+			});
 		});
-	});
 		function btnDelete() {
-		var deleteBookIdValue = $("#selectBookId").val();
+			var deleteBookIdValue = $("#selectBookId").val();
 
-	    $.ajax({
-			type: "POST",
-			url: '@Url.Action("Delete")',
-			data: { id: deleteBookIdValue },
-			success: function (result) {
-			  if (result) {
-			    $("#deleteModal").modal("hide");
-				  $("#selectbookId").val(null);
+			$.ajax({
+				type: "DELETE",				
+				url: 'https://localhost:44369/api/ServiceBooks/' + deleteBookIdValue,		
+		        data: { id: deleteBookIdValue },
+		        success: function (result) {
+			    if (result) {
+				$("#deleteModal").modal("hide");
+				$("#selectbookId").val(null);
 				$("#successModal").modal('show');
-			  }
-			  else {
+			    }
+			   else {
 				alert("something went wrong");
-			  }
-			}
-		});
+			    }
 		}
+	});
+}
 
-		function btnCancel() {
-			window.location.href = "";
-		}
+function btnCancel() {
+	window.location.href = "";
+}
 
-		function btnOk() {
-			location.reload();
-		}
+function btnOk() {
+	location.reload();
+}
 
-		function Confirm(id) {
-			$("#selectBookId").val(id);
-			$("#deleteModal").modal('show');
-		}
+function Confirm(id) {
+	$("#selectBookId").val(id);
+	$("#deleteModal").modal('show');
+}
 
 	</script>
 }
