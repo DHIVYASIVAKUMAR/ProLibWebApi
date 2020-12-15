@@ -1,105 +1,5 @@
-﻿@*@model WebApiLibrary.Models.ServiceStudents
-
-	@{
-		ViewBag.Title = "Create";
-		Layout = "~/Views/Shared/_Layout.cshtml";
-	}
-
-	<h2>Create</h2>
-
-
-	@using (Html.BeginForm())
-	{
-		@Html.AntiForgeryToken()
-
-		<div class="form-horizontal">
-			<h4>ServiceStudents</h4>
-			<hr />
-			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceStudentName, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.serviceStudentName, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceStudentName, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceStudentBranch, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.serviceStudentBranch, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceStudentBranch, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceGender, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EnumDropDownListFor(model => model.serviceGender, htmlAttributes: new { @class = "form-control" })
-					@Html.ValidationMessageFor(model => model.serviceGender, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.servicePhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.servicePhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.servicePhoneNumber, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.serviceAddress, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceAddress, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceCity, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.serviceCity, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceCity, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.serviceEmail, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceEmail, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.servicePassword, htmlAttributes: new { @class = "control-label col-md-2" })
-				<div class="col-md-10">
-					@Html.EditorFor(model => model.servicePassword, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.servicePassword, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-10">
-					<input type="submit" value="Create" class="btn btn-default" />
-				</div>
-			</div>
-		</div>
-	}
-
-	<div>
-		@Html.ActionLink("Back to List", "Index")
-	</div>
-
-	@section Scripts {
-		@Scripts.Render("~/bundles/jqueryval")
-	}*@
-@model WebApiLibrary.ViewModels.ServiceStudentViewModel
-
-@{
-	ViewBag.Title = "Create";
-}
+﻿@model WebApiLibrary.ViewModels.ServiceStudentViewModel
+		@{ ViewBag.Title = "Create"; }
 
 <center>
 	<h2 style="
@@ -137,96 +37,63 @@
 	</div>
 </div>
 
-@using (Html.BeginForm())
-{
-	@Html.AntiForgeryToken()
-	<div class="form-horizontal" style="padding-top:50px">
-		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-		<div class="form-group">
-			@Html.LabelFor(model => model.students.serviceStudentName, htmlAttributes: new { @class = "control-label col-md-5" })
-			<div class="col-md-7">
-				@Html.EditorFor(model => model.students.serviceStudentName, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.students.serviceStudentName, "", new { @class = "text-danger" })
-			</div>
-		</div>
 
+<div class="container">
+	<form name="createStudentForm" id="createStudent" class="form-horizontal">
 		<div class="form-group">
-			@Html.LabelFor(model => model.students.serviceStudentBranch, htmlAttributes: new { @class = "control-label col-md-5" })
-			<div class="col-md-7">
-				<table>
-					<tr>
-						<td style="width : 280px">
-							@Html.DropDownListFor(model => model.students.serviceStudentBranch, Model.studentBranches.Select(x => new SelectListItem { Text = x.serviceStudentBranch, Value = x.serviceStudentBranch }).ToList(), "select Branch", htmlAttributes: new { @class = "form-control" })
-						</td>
-						<td>
-							<button type="button" class="btn btn-outline-primary  wrapper" id="showModal" onclick="NewBranch()">
-								<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-									<path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z"></path>
-									<path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"></path>
-								</svg>
-							</button>
-						</td>
-					</tr>
-				</table>
-				@Html.ValidationMessageFor(model => model.students.serviceStudentBranch, "", new { @class = "text-danger" })
-			</div>
+			<label class="text-info">Name</label>
+			<input type="text" id="name" class="form-control" />
 		</div>
-
 		<div class="form-group">
-			@Html.LabelFor(model => model.students.serviceGender, htmlAttributes: new { @class = "control-label col-md-5" })
-			<div class="col-md-7">
-				@Html.EnumDropDownListFor(model => model.students.serviceGender, new { @class = "form-control" })
-				@Html.ValidationMessageFor(model => model.students.serviceGender, "", new { @class = "text-danger" })
-			</div>
+			<label class="text-info">Branch</label>
+			<table class="table-borderless">
+				<tr>
+					<td style="width : 280px">
+						<select id="branch" class="form-control"></select>
+					</td>
+					<td>
+						<button type="button" class="btn btn-outline-primary  wrapper" onclick="NewBranch()">
+							<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z"></path>
+								<path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"></path>
+							</svg>
+						</button>
+					</td>
+				</tr>
+			</table>
 		</div>
-
 		<div class="form-group">
-			@Html.LabelFor(model => model.students.servicePhoneNumber, htmlAttributes: new { @class = "control-label col-md-5" })
-			<div class="col-md-7">
-				@Html.EditorFor(model => model.students.servicePhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.students.servicePhoneNumber, "", new { @class = "text-danger" })
-			</div>
+			<label class="text-info">Gender</label>
+			<select type="text" id="gender" class="form-control">
+				<option>Female</option>
+				<option>Male</option>
+				<option>Gender Less</option>
+			</select>
 		</div>
-
 		<div class="form-group">
-			@Html.LabelFor(model => model.students.serviceAddress, htmlAttributes: new { @class = "control-label col-md-5" })
-			<div class="col-md-7">
-				@Html.EditorFor(model => model.students.serviceAddress, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.students.serviceAddress, "", new { @class = "text-danger" })
-			</div>
+			<label class="text-info">Phone Number</label>
+			<input type="text" id="phoneNumber" class="form-control" />
 		</div>
-
 		<div class="form-group">
-			@Html.LabelFor(model => model.students.serviceCity, htmlAttributes: new { @class = "control-label col-md-5" })
-			<div class="col-md-7">
-				@Html.EditorFor(model => model.students.serviceCity, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.students.serviceCity, "", new { @class = "text-danger" })
-			</div>
+			<label class="text-info">Address</label>
+			<input type="text" id="address" class="form-control" />
 		</div>
-
 		<div class="form-group">
-			@Html.LabelFor(model => model.students.serviceEmail,"Email", htmlAttributes: new { @class = "control-label col-md-5" })
-			<div class="col-md-7">
-				@Html.EditorFor(model => model.students.serviceEmail, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.students.serviceEmail, "", new { @class = "text-danger" })
-			</div>
+			<label class="text-info">City</label>
+			<input type="text" id="city" class="form-control" />
 		</div>
-
 		<div class="form-group">
-			@Html.LabelFor(model => model.students.servicePassword,"Password", htmlAttributes: new { @class = "control-label col-md-5" })
-			<div class="col-md-7">
-				@Html.EditorFor(model => model.students.servicePassword, new { htmlAttributes = new { @class = "form-control" } })
-				@Html.ValidationMessageFor(model => model.students.servicePassword, "", new { @class = "text-danger" })
-			</div>
+			<label class="text-info">Email</label>
+			<input type="email" id="email" class="form-control" />
 		</div>
-
 		<div class="form-group">
-			<div class="col-md-offset-6 col-md-7">
-				<input type="submit" value="Create" class="btn btn-primary" />
-			</div>
+			<label class="text-info">Password</label>
+			<input type="password" id="password" class="form-control" />
 		</div>
-	</div>
-}
+		<button type="submit" class="btn btn-default">Create</button>
+		<br /><br />
+	</form>
+</div>
 <div>
 	<button class="btn btn-primary">@Html.ActionLink("Back to List", "Index", new { @style = "color:#FFFFFF;" })</button>
 </div>
@@ -236,6 +103,64 @@
 	@Scripts.Render("~/bundles/jqueryval")
 	<script>
 		$(document).ready(function () {
+
+			var branch = $('#branch');
+			branch.append($("<option></option>").val('').html('Please Select Branch'));
+			$.ajax({
+				url: "https://localhost:44369/api/ServiceStudentBranches/GetstudentBranches",
+				type: 'GET',
+				datatype: 'JSON',
+				success: function (data) {
+					$.each(data, function (index, branchs) {
+						branch.append($("<option></option>").val(branchs.serviceStudentBranch).html(branchs.serviceStudentBranch));
+					});
+				},
+				error: function () {
+					alert('dropdown error');
+				}
+			});
+			$("#createStudent").submit(function (event) {
+				event.preventDefault();
+				var apiurl = "https://localhost:44369/api/ServiceStudents/PostServiceStudents";
+				if ($("#gender").val() == "Female")
+				{
+					var gender = 0;
+				}
+				else if ($("#gender").val() == "Male") {
+					var gender = 1;
+				}
+				else if ($("#gender").val() == "Gender Less") {
+					var gender = 2;
+				}
+
+				var data = {
+					"serviceStudentName": $("#name").val().trim(),
+					"serviceStudentBranch": $("#branch").val().trim(),
+					"serviceGender": gender,
+					"servicePhoneNumber": $("#phoneNumber").val().trim(),
+					"serviceAddress": $("#address").val().trim(),
+					"serviceCity": $("#city").val().trim(),
+					"serviceEmail": $("#email").val().trim(),
+					"servicePassword": $("#password").val().trim()
+				}
+				console.log(data);
+				$.ajax({
+					url: apiurl,
+					type: 'POST',
+					dataType: 'json',
+					data: data,
+					success: function (d) {
+						alert("Saved Successfully");
+						document.getElementById("createStudent").reset();
+					},
+					error: function () {
+						alert("Error please try again");
+					}
+				});
+			});
+		  
+
+
 			$('#btnCancel').click(function () {
 				location.reload();
 			});
@@ -244,8 +169,8 @@
 				var newBranchName = $('#newBranchText').val();
 				$.ajax({
 					type: "POST",
-					url: '@Url.Action("AddBranch")',
-					data: { name: newBranchName },
+					url: 'https://localhost:44369/api/ServiceStudentBranches/PostServiceStudentBranch',
+					data: { "serviceStudentBranch": newBranchName },
 					success: function (result) {
 						if (result) {
 							alert(newBranchName + " Added Successfully !");

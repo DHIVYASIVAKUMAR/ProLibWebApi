@@ -106,7 +106,7 @@
 </table>
 <script>
 	$(document).ready(function () {
-		$.get('https://localhost:44369/api/ServiceStudents/' +@Model.serviceStudentId, function (response) {
+		$.get('https://localhost:44369/api/ServiceStudents/GetServiceStudents/' +@Model.serviceStudentId, function (response) {
 			console.log(response);
 			$('#name').text(response.serviceStudentName);
 			$('#branch').text(response.serviceStudentBranch);

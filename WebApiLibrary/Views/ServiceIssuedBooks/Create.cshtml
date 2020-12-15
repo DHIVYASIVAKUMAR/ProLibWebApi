@@ -191,7 +191,7 @@
 
 				$.ajax({
 					type: "POST",
-					url: '@Url.Action("BookIssue")',
+					url: 'https://localhost:44369/api/ServiceIssuedBooks/PostServiceIssuedBooks',
 					data: data,
 					success: function (result) {
 						if (result) {
