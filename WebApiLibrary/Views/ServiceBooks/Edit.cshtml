@@ -9,74 +9,62 @@
 	}
 </style>
 
-@*@using (Html.BeginForm())
-	{
-		@Html.AntiForgeryToken()
-		<div class="form-horizontal" style="padding-top:50px">
-			<hr />
-			@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-			@Html.HiddenFor(model => model.serviceBookId)
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceBookName, htmlAttributes: new { @class = "control-label col-md-5" })
-				<div class="col-md-7">
-					@Html.EditorFor(model => model.serviceBookName, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceBookName, "", new { @class = "text-danger" })
-				</div>
+<div class="modal fade" id="newAuthorModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">Create</h2>
 			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceAuthorName, htmlAttributes: new { @class = "control-label col-md-5" })
-				<div class="col-md-7">
-					@Html.EditorFor(model => model.serviceAuthorName, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceAuthorName, "", new { @class = "text-danger" })
-				</div>
+			<div class="modal-body">
+				<p>New Author name</p>
+				<input id="newAuthorTextBox" type="text" />
 			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceSerialNumber, htmlAttributes: new { @class = "control-label col-md-5" })
-				<div class="col-md-7">
-					@Html.EditorFor(model => model.serviceSerialNumber, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceSerialNumber, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceBranch, htmlAttributes: new { @class = "control-label col-md-5" })
-				<div class="col-md-7">
-					@Html.EditorFor(model => model.serviceBranch, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.serviceBranch, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.servicePublications, htmlAttributes: new { @class = "control-label col-md-5" })
-				<div class="col-md-7">
-					@Html.EditorFor(model => model.servicePublications, new { htmlAttributes = new { @class = "form-control" } })
-					@Html.ValidationMessageFor(model => model.servicePublications, "", new { @class = "text-danger" })
-				</div>
-			</div>
-
-			<div class="form-group">
-				@Html.LabelFor(model => model.serviceIsAvailable, "Is Available", htmlAttributes: new { @class = "control-label col-md-5" })
-				<div class="col-md-7">
-					<div class="checkbox">
-						@Html.EditorFor(model => model.serviceIsAvailable)
-						@Html.ValidationMessageFor(model => model.serviceIsAvailable, "", new { @class = "text-danger" })
-					</div>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="col-md-offset-5 col-md-7">
-					<input type="submit" value="Save" class="btn btn-primary" onclick="return confirm('Edited sucessful !');" />
-				</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="btnOk" style="margin-right:5px" onclick="addName()">Add</button>
+				<a href="#" id="btnCancel" class="btn btn-primary " onclick="cancelName()"> Cancel </a>
 			</div>
 		</div>
-	}*@
+	</div>
+</div>
+
+<div class="modal fade" id="newBranchModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">Create</h2>
+			</div>
+			<div class="modal-body">
+				<p>New Branch name</p>
+				<input id="newBranchTextBox" type="text" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="btnOk" style="margin-right:5px" onclick="addBranch()">Add</button>
+				<a href="#" id="btnCancel" class="btn btn-primary " onclick="cancelBranch()"> Cancel </a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="newPublicationModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">Create</h2>
+			</div>
+			<div class="modal-body">
+				<p>New Publication name</p>
+				<input id="newPublicationTextBox" type="text" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="btnOk" style="margin-right:5px" onclick="addPublication()">Add</button>
+				<a href="#" id="btnCancel" class="btn btn-primary " onclick="cancelPublication()"> Cancel </a>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div class="container">
-	<form name="createBookForm" id="createBook" class="form-horizontal">
+	<form name="createBookForm" id="editBook" class="form-horizontal">
 		<div class="form-group">
 			<label class="text-info">Book Name</label>
 			<input type="text" id="bookName" class="form-control" />
@@ -98,8 +86,6 @@
 					</td>
 				</tr>
 			</table>
-			@*@Html.ValidationMessageFor(model => model.book.serviceAuthorName, "", new { @class = "text-danger" })*@
-
 		</div>
 		<div class="form-group">
 			<label class="text-info">Serial Number</label>
@@ -122,7 +108,6 @@
 					</td>
 				</tr>
 			</table>
-			@*@Html.ValidationMessageFor(model => model.book.serviceBranch, "", new { @class = "text-danger" })*@
 		</div>
 		<div class="form-group">
 			<label class="text-info">Publication</label>
@@ -141,15 +126,12 @@
 					</td>
 				</tr>
 			</table>
-			@*@Html.ValidationMessageFor(model => model.book.servicePublications, "", new { @class = "text-danger" })*@
-
 		</div>
 		<div class="form-group">
 			<label for="isAvailable" class="text-info"> Is Available </label>
 			<input type="checkbox" id="isAvailable" name="isAvailable">
-
 		</div>
-		<button type="submit" class="btn btn-default">Create</button>
+		<button type="submit" class="btn btn-default">Save</button>
 		<br /><br />
 	</form>
 </div>
@@ -160,13 +142,178 @@
 
 @section Scripts {
 	@Scripts.Render("~/bundles/jqueryval")
-    
-	<script>
+    <script>
 		$(document).ready(function () {
 			$.get('https://localhost:44369/api/ServiceBooks/GetServiceBooks/' +@Model.serviceBookId, function (response) {
 				console.log(response);
+				$('#bookName').val(response.serviceBookName);
+				$('#serialNum').val(response.serviceSerialNumber);
+				$('#authorName :selected').text(response.serviceAuthorName);
+				$('#branch :selected').text(response.serviceBranch);
+				$('#publication :selected').text(response.servicePublications);
+				//$('#branch').val(response.serviceBranch);
+				//$('#publication').val(response.servicePublications);
+				if (response.serviceIsAvailable == true)
+				{
+					$('#isAvailable').prop('checked',true);
+				}
+
+			});
+
+			var authorName = $('#authorName');
+			authorName.append($("<option></option>").val('').html('Please Select Author'));
+			$.ajax({
+				url: "https://localhost:44369/api/ServiceAuthors/GetAuthor",
+				type: 'GET',
+				datatype: 'JSON',
+				success: function (data) {
+					$.each(data, function (index, author) {
+						authorName.append($("<option></option>").val(author.serviceAuthorName).html(author.serviceAuthorName));
+					});
+				},
+				error: function () {
+					alert('dropdown error');
+				}
+			});
+
+			var branch = $('#branch');
+			branch.append($("<option></option>").val('').html('Please Select Branch'));
+			$.ajax({
+				url: "https://localhost:44369/api/ServiceBooks/GetBranch",
+				type: 'GET',
+				datatype: 'JSON',
+				success: function (data) {
+					$.each(data, function (index, branchs) {
+						branch.append($("<option></option>").val(branchs.serviceBranch).html(branchs.serviceBranch));
+					});
+				},
+				error: function () {
+					alert('dropdown error');
+				}
+			});
+			var publication = $('#publication');
+			publication.append($("<option></option>").val('').html('Please Select Publication'));
+			$.ajax({
+				url: "https://localhost:44369/api/ServiceBooks/GetPublication",
+				type: 'GET',
+				datatype: 'JSON',
+				success: function (data) {
+					$.each(data, function (index, publications) {
+						publication.append($("<option></option>").val(publications.servicePublications).html(publications.servicePublications));
+					});
+				},
+				error: function () {
+					alert('dropdown error');
+				}
+			});
+
+			$("#editBook").submit(function (event) {
+				event.preventDefault();
+				var apiurl = "https://localhost:44369/api/ServiceBooks/PutServiceBooks/"+@Model.serviceBookId;
+				if (document.getElementById('isAvailable').checked) {
+					var availability = true;
+				}
+				else {
+					var availability = false;
+				}
+				var data = {
+					"serviceBookId":@Model.serviceBookId,
+					"serviceBookName": $("#bookName").val().trim(),
+					"serviceSerialNumber": $("#serialNum").val().trim(),
+					"serviceAuthorName": $("#authorName").val().trim(),
+					"serviceBranch": $("#branch").val().trim(),
+					"servicePublications": $("#publication").val().trim(),
+					"serviceIsAvailable": availability
+				}
+				console.log(data);
+				$.ajax({
+					url: apiurl,
+					type: 'PUT',
+					dataType: 'json',
+					data: data,
+					success: function (d) {
+						alert("Saved Successfully");
+						document.getElementById("editBook").reset();
+					},
+					error: function () {
+						alert("Error please try again");
+					}
+				});
 			});
 		});
-	</script>
-	
+
+		function NewAuthor() {
+			$("#newAuthorModal").modal('show');
+		}
+		function cancelName() {
+			$("#newAuthorModal").modal('hide');
+		}
+		function addName() {
+			var newAuthorName = $("#newAuthorTextBox").val();
+			$.ajax({
+				type: "POST",
+				url: 'https://localhost:44369/api/ServiceAuthors/PostServiceAuthor',
+				data: { "serviceAuthorName": newAuthorName },
+				success: function (result) {
+					if (result) {
+						alert(newAuthorName + " added successfully ! ");
+						$("#newAuthorModal").modal('hide');
+						location.reload();
+					} else {
+						alert("something went wrong");
+					}
+				}
+			});
+		}
+
+		function NewBranch() {
+			$("#newBranchModal").modal('show');
+		}
+		function cancelBranch() {
+			$("#newBranchModal").modal('hide');
+		}
+		function addBranch() {
+			var newBranchName = $("#newBranchTextBox").val();
+			$.ajax({
+				type: "POST",
+				url: 'https://localhost:44369/api/ServiceBooks/PostServiceBranches',
+				data: { "serviceBranch": newBranchName },
+				success: function (result) {
+					if (result) {
+						alert(newBranchName + " added successfully ! ");
+						$("#newBranchModal").modal('hide');
+						location.reload();
+					} else {
+						alert("something went wrong");
+						location.reload();
+					}
+				}
+			});
+		}
+
+		function NewPublication() {
+			$("#newPublicationModal").modal('show');
+		}
+		function cancelPublication() {
+			$("#newPublicationModal").modal('hide');
+		}
+		function addPublication() {
+			var newPublicationName = $("#newPublicationTextBox").val();
+			$.ajax({
+				type: "POST",
+				url: 'https://localhost:44369/api/ServiceBooks/PostServicePublications',
+				data: { "servicePublications": newPublicationName },
+				success: function (result) {
+					if (result) {
+						alert(newPublicationName + " added successfully ! ");
+						$("#newAuthorModal").modal('hide');
+						location.reload();
+					} else {
+						alert("something went wrong");
+					}
+				}
+			});
+		}
+</script>
+
 }

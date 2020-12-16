@@ -1,5 +1,4 @@
 ﻿@model WebApiLibrary.Models.ServiceStudents
-
 @{
 	ViewBag.Title = "Details";
 }
@@ -8,92 +7,69 @@
 	a, a:hover {
 		color: white;
 	}
-
 	.details {
 		padding-left: 400px;
 	}
-
 	h2 {
 		padding-bottom: 50px;
 	}
-
 	dd a, dd a:hover {
 		color: dodgerblue;
 	}
-
 	dd, dt {
 		font-size: 20px;
 		padding-bottom: 11px;
 	}
-
 	dl dd {
 		padding-left: 20px;
 	}
 </style>
+
 <div class="details">
 	<dl class="dl-horizontal">
 		<dt>
 			<lable>Name</lable>
 		</dt>
 		<dd id="name">
-			@*
-		@Html.DisplayFor(model => model.serviceStudentName)*@
 		</dd>
 		<dt>
 			<label>Branch</label>
 		</dt>
 		<dd id="branch">
-			@*
-		@Html.DisplayFor(model => model.serviceStudentBranch)*@
 		</dd>
 		<dt>
 			<label>Gender</label>
 		</dt>
 		<dd id="gender">
-			@*
-		@Html.DisplayFor(model => model.serviceGender)*@
 		</dd>
 		<dt>
 			<label>Phone Number</label>
 		</dt>
 		<dd id="phoneNumber">
-			@*
-		@Html.DisplayFor(model => model.servicePhoneNumber)*@
 		</dd>
 		<dt>
 			<label>Address</label>
 		</dt>
 		<dd id="address">
-			@*
-		@Html.DisplayFor(model => model.serviceAddress)*@
 		</dd>
 		<dt>
 			<label>City</label>
 		</dt>
 		<dd id="city">
-			@*
-		@Html.DisplayFor(model => model.serviceCity)*@
 		</dd>
 		<dt>
 			<label>Email</label>
 		</dt>
 		<dd id="email">
-			@*
-		@Html.DisplayFor(model => model.serviceEmail)*@
 		</dd>
 		<dt>
 			<label>Password</label>
 		</dt>
 		<dd id="password">
-			@*
-		@Html.DisplayFor(model => model.servicePassword)*@
 		</dd>
 	</dl>
 </div>
-@*<p>
-		@Html.ActionLink("Edit", "Edit", new { id = Model.studentId }) |
-		@Html.ActionLink("Back to List", "Index")
-	</p>*@
+
 <table class="details">
 	<tr>
 		<td style="padding-left: 500px;padding-right: 15px;">
@@ -104,6 +80,7 @@
 		</td>
 	</tr>
 </table>
+
 <script>
 	$(document).ready(function () {
 		$.get('https://localhost:44369/api/ServiceStudents/GetServiceStudents/' +@Model.serviceStudentId, function (response) {

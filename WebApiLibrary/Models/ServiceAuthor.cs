@@ -9,7 +9,6 @@ namespace WebApiLibrary.Models
 {
 	public class ServiceAuthor
 	{
-
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int serviceAuthorId { get; set; }

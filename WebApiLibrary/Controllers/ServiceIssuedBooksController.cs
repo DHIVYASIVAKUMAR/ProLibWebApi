@@ -10,169 +10,8 @@ using WebApiLibrary.DataContext;
 using WebApiLibrary.Models;
 using WebApiLibrary.ViewModels;
 
-//namespace WebApiLibrary.Controllers
-//{
-//    public class ServiceIssuedBooksController : Controller
-//    {
-//        private DatabaseContext context = new DatabaseContext();
-
-//        // GET: ServiceIssuedBooks
-//        public ActionResult Index()
-//        {
-//            var issuedBook = context.issuedBook.Include(s => s.serviceBooks).Include(s => s.serviceStudents);
-//            return View(issuedBook.ToList());
-//        }
-
-//        // GET: ServiceIssuedBooks/Details/5
-//        public ActionResult Details(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            ServiceIssuedBooks serviceIssuedBooks = context.issuedBook.Find(id);
-//            if (serviceIssuedBooks == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            return View(serviceIssuedBooks);
-//        }
-
-//        // GET: ServiceIssuedBooks/Create
-//        public ActionResult Create()
-//        {
-//            ViewBag.bookId = new SelectList(context.book, "serviceBookId", "serviceBookName");
-//            ViewBag.studentId = new SelectList(context.student, "serviceStudentId", "serviceStudentName");
-//            return View();
-//        }
-
-//        // POST: ServiceIssuedBooks/Create
-//        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-//        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult Create([Bind(Include = "serviceIssuedId,bookId,studentId,serviceFromDate,serviceToDate")] ServiceIssuedBooks serviceIssuedBooks)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                context.issuedBook.Add(serviceIssuedBooks);
-//                context.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
-
-//            ViewBag.bookId = new SelectList(context.book, "serviceBookId", "serviceBookName", serviceIssuedBooks.bookId);
-//            ViewBag.studentId = new SelectList(context.student, "serviceStudentId", "serviceStudentName", serviceIssuedBooks.studentId);
-//            return View(serviceIssuedBooks);
-//        }
-//        [HttpPost]
-//        public JsonResult BookIssue(ServiceIssuedBooks issuedBooks)
-//        {
-//            var Book = context.book.FirstOrDefault(b => b.bookId == issuedBooks.bookId);
-//            if (issuedBooks != null && Book != null)
-//            {
-//                context.issuedBook.Add(issuedBooks);
-//                context.SaveChanges();
-//                Book.isAvailable = false;
-
-//                context.Entry(Book).State = EntityState.Modified;
-//                context.SaveChanges();
-//                return Json(new { result = "success" });
-//            }
-//            else
-//            {
-//                return Json(false, JsonRequestBehavior.AllowGet);
-//            }
-//        }
-
-
-//        // GET: ServiceIssuedBooks/Edit/5
-//        public ActionResult Edit(int? id)
-//        {
-//            if (id == null)
-//            {
-//                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//            }
-//            ServiceIssuedBooks serviceIssuedBooks = context.issuedBook.Find(id);
-//            if (serviceIssuedBooks == null)
-//            {
-//                return HttpNotFound();
-//            }
-//            ViewBag.bookId = new SelectList(context.book, "serviceBookId", "serviceBookName", serviceIssuedBooks.bookId);
-//            ViewBag.studentId = new SelectList(context.student, "serviceStudentId", "serviceStudentName", serviceIssuedBooks.studentId);
-//            return View(serviceIssuedBooks);
-//        }
-
-//        // POST: ServiceIssuedBooks/Edit/5
-//        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-//        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-//        [HttpPost]
-//        [ValidateAntiForgeryToken]
-//        public ActionResult Edit([Bind(Include = "serviceIssuedId,bookId,studentId,serviceFromDate,serviceToDate")] ServiceIssuedBooks serviceIssuedBooks)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                context.Entry(serviceIssuedBooks).State = EntityState.Modified;
-//                context.SaveChanges();
-//                return RedirectToAction("Index");
-//            }
-//            ViewBag.bookId = new SelectList(context.book, "serviceBookId", "serviceBookName", serviceIssuedBooks.bookId);
-//            ViewBag.studentId = new SelectList(context.student, "serviceStudentId", "serviceStudentName", serviceIssuedBooks.studentId);
-//            return View(serviceIssuedBooks);
-//        }
-
-//        //// GET: ServiceIssuedBooks/Delete/5
-//        //public ActionResult Delete(int? id)
-//        //{
-//        //    if (id == null)
-//        //    {
-//        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-//        //    }
-//        //    ServiceIssuedBooks serviceIssuedBooks = context.issuedBook.Find(id);
-//        //    if (serviceIssuedBooks == null)
-//        //    {
-//        //        return HttpNotFound();
-//        //    }
-//        //    return View(serviceIssuedBooks);
-//        //}
-
-//        //// POST: ServiceIssuedBooks/Delete/5
-//        //[HttpPost, ActionName("Delete")]
-//        //[ValidateAntiForgeryToken]
-//        //public ActionResult DeleteConfirmed(int id)
-//        //{
-//        //    ServiceIssuedBooks serviceIssuedBooks = context.issuedBook.Find(id);
-//        //    context.issuedBook.Remove(serviceIssuedBooks);
-//        //    context.SaveChanges();
-//        //    return RedirectToAction("Index");
-//        //}
-//        [HttpPost]
-//        public JsonResult Return(int BookId, int IssuedBookId)
-//        {
-//            bool result = false;
-//            var book = context.book.FirstOrDefault(b => b.bookId == BookId);
-//            var issuedBook = context.issuedBook.FirstOrDefault(i => i.issuedId == IssuedBookId);
-//            if (book != null && issuedBook != null)
-//            {
-//                book.isAvailable = true;
-//                context.issuedBook.Remove(issuedBook);
-//                context.SaveChanges();
-//                result = true;
-//            }
-//            return Json(result, JsonRequestBehavior.AllowGet);
-//        }
-//        protected override void Dispose(bool disposing)
-//        {
-//            if (disposing)
-//            {
-//                context.Dispose();
-//            }
-//            base.Dispose(disposing);
-//        }
-//    }
-//}
 namespace WebApiLibrary.Controllers
-{
-    //[Authorize(Roles = "Admin")]
+{   
     public class ServiceIssuedBooksController : Controller
     {
         private DatabaseContext context = new DatabaseContext();
@@ -215,7 +54,6 @@ namespace WebApiLibrary.Controllers
                 serviceDisplayFromDate = x.serviceFromDate.ToString("MM/dd/yyyy"),
                 serviceIssuedId = x.serviceIssuedId
             }).ToList();
-
             return View(result);
         }
 
@@ -253,7 +91,6 @@ namespace WebApiLibrary.Controllers
             ViewBag.bookName = book.serviceBookName;
             ViewBag.authorName = book.serviceAuthorName;
             ViewBag.bookId = book.serviceBookId;
-
             return View(context.student.ToList());
         }
 
@@ -316,10 +153,10 @@ namespace WebApiLibrary.Controllers
                 serviceDisplayFromDate = x.serviceFromDate.ToString("MM/dd/yyyy"),
                 serviceIssuedId = x.serviceIssuedId                
             }).ToList();
-
             // return View(result);
             return View(result.FirstOrDefault());
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ServiceIssuedBookViewModel issuedBookViewModel)
@@ -338,7 +175,6 @@ namespace WebApiLibrary.Controllers
             }
             return View(issuedBooks);
         }
-
 
         [HttpPost]
         public JsonResult Return(int BookId, int IssuedBookId)

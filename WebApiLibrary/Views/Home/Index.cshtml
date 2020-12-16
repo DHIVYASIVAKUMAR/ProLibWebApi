@@ -8,7 +8,6 @@
 		padding-right: 0px;
 		margin-right: 0px;
 	}
-
 	img {
 		height: 700px;
 		width: 135%;
@@ -30,9 +29,7 @@
 			<p id="humidity"></p>
 			<p id="pressure"> </p>
 			<p id="speed"></p>
-
 		</div>
-
 		<p></p>
 		<p></p>
 	</div>
@@ -41,7 +38,6 @@
 <script>
 	$(document).ready(function () {
 		$("#btn-weather").click(function () {
-
 			$.get('https://api.openweathermap.org/data/2.5/weather?q=Chennai&appid=f6a6648576467ea18320d165880ab133',function(response) {
 				console.log(response);
 				$('#name').text("Weather in "+ response.name);
@@ -54,5 +50,4 @@
 			});
 		});
 	});
-
 </script>

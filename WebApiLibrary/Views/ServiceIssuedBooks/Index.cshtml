@@ -15,41 +15,32 @@
 	thead input {
 		width: 100%;
 	}
-
 	table.dataTable {
 		margin-top: 2em !important;
 		margin-bottom: 2em !important;
 	}
-
-		table.dataTable tbody tr.odd {
-			background-color: lavender !important;
-		}
-
-		table.dataTable tbody tr.even {
-			background-color: white !important;
-		}
-
+	table.dataTable tbody tr.odd {
+		background-color: lavender !important;
+	}
+	table.dataTable tbody tr.even {
+		background-color: white !important;
+	}
 	.table th, .table td {
 		text-align: center;
 	}
-
 	#bookTable {
 		width: 100% !important;
 		border: 1px solid black;
 	}
-
 	#bookTable_wrapper {
 		padding-top: 20px;
 	}
-
 	#bookTable_length {
 		padding-bottom: 15px;
 	}
-
 	a, a:hover {
 		color: white;
 	}
-
 	.wrapper {
 		display: inline-block;
 		vertical-align: top;
@@ -119,7 +110,6 @@
 				@Html.DisplayName("To Date")
 			</th>
 			<th>Edit</th>
-			@*<th>Details</th>*@
 			<th>Return</th>
 		</tr>
 	</thead>
@@ -163,20 +153,12 @@
 				</td>
 				<td>
 					<button type="button" class="btn btn-primary  wrapper" id="showModal" onclick="Confirm(@item.serviceBookId,@item.serviceIssuedId)">Return</button>
-				</td>
-				@*<td>
-						<button class="btn btn-primary">@Html.ActionLink("Edit", "Edit", new { id = item.issuedId }, new { @style = "color:#FFFFFF;" })</button>
-					</td>
-					<td>
-						<button class="btn btn-primary">@Html.ActionLink("Details", "Details", new { id = item.issuedId }, new { @style = "color:#FFFFFF;" })</button>
-					</td>
-					<td>
-						<a href="#" id="showModal" class="btn btn-danger" onclick="Confirm(@item.bookId,@item.issuedId)">Return</a>
-					</td>*@
+				</td>				
 			</tr>
 		}
 	</tbody>
 </table>
+
 <input type="hidden" id="selectBookId" />
 <input type="hidden" id="selectIssuedBookId" />
 
@@ -198,17 +180,6 @@
 					}
 				});
 			}
-			//else if (title != "Edit" && i == 6 || i == 7) {
-			//	$(this).html('<input type="Date" data-date-format="MM DD YYYY" class="fas" placeholder="&#xf0b0; filter">');
-			//	$('input', this).on('keyup change', function () {
-			//		if (table.column(i).search() !== this.value) {
-			//			table
-			//				.column(i)
-			//				.search(this.value)
-			//				.draw();
-			//		}
-			//	});
-			//}
 			else if (title != "Edit" && i == 6 || i == 7) {
 				$(this).html('<input type="Date" data-date-format="MM DD YYYY" class="fas" placeholder="&#xf0b0; filter">');
 				$('input', this).on('keyup change', function () {
@@ -247,7 +218,6 @@
 
 		$('#btnReturn').click(function () {
 			var returnBookIdValue = $("#selectBookId").val();
-
 	    $.ajax({
 			type: "DELETE",
 			url: 'https://localhost:44369/api/ServiceIssuedBooks/DeleteServiceIssuedBooks/' + $("#selectIssuedBookId").val(),

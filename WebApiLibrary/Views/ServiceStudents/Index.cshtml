@@ -2,9 +2,6 @@
 @{
 	ViewBag.Title = "Index";
 }
-
-@*<link rel=" //cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">*@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/Books/BookCreate.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" />
@@ -15,58 +12,45 @@
 	thead input {
 		width: 100%;
 	}
-
 	table.dataTable {
 		margin-top: 2em !important;
 		margin-bottom: 2em !important;
 	}
-
-		table.dataTable tbody tr.odd {
-			background-color: lavender !important;
-		}
-
-		table.dataTable tbody tr.even {
-			background-color: white !important;
-		}
-
+	table.dataTable tbody tr.odd {
+		background-color: lavender !important;
+	}
+	table.dataTable tbody tr.even {
+		background-color: white !important;
+	}
 	.table th, .table td {
 		text-align: center;
 	}
-
 	#studentTable {
 		width: 100% !important;
 		border: 1px solid black;
 	}
-
 	#studentTable_wrapper {
 		padding-top: 20px;
 	}
-
 	#studentTable_length {
 		padding-bottom: 15px;
 	}
-
 	a, a:hover {
 		color: white;
 	}
-
 	.button-group {
 		width: 118px;
 		height: 34px;
 	}
-
 	.page-title {
-		/*background: purple;*/
 		overflow: hidden;
 	}
-
 	div h2 {
 		text-align: center;
 		display: inline-block;
 		width: 100%;
 		margin-right: -50%;
 	}
-
 	.titile-button {
 		float: right;
 		margin-left: 450px !important;
@@ -133,9 +117,6 @@
 				@Html.DisplayNameFor(model => model.serviceCity)
 			</th>
 			<th>Actions</th>
-			@*<th>Edit</th>
-				<th>Details</th>
-				<th>Delete</th>*@
 		</tr>
 	</thead>
 	<tbody>
@@ -227,8 +208,7 @@
 			});
 
 			$('#btnDelete').click(function () {
-				var deleteStudentIdValue = $('#selectStudentId').val();
-			
+				var deleteStudentIdValue = $('#selectStudentId').val();			
 				$.ajax({
 					type: "DELETE",
 					url: 'https://localhost:44369/api/ServiceStudents/'+deleteStudentIdValue,

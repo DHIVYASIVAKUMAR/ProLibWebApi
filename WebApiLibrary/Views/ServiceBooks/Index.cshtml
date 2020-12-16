@@ -8,27 +8,26 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.3.2/css/fixedColumns.bootstrap4.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
 <style>
-	.page-title {
-		/*background: purple;*/
+	.page-title {		
 		overflow: hidden;
 	}
-
 	div h2 {
 		text-align: center;
 		display: inline-block;
 		width: 100%;
 		margin-right: -50%;
 	}
-
 	.titile-button {
 		float: right;
 		margin-left: 450px !important;
 	}
 </style>
+
 <div class="page-title">
 	<h2>List of Books</h2>
 	<button class="btn btn-primary title-button" style="margin-left:450px">@Html.ActionLink("Create New", "Create")</button>
 </div>
+
 <div class="modal fade" id="successModal">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -44,7 +43,6 @@
 		</div>
 	</div>
 </div>
-
 
 <div class="modal fade" id="deleteModal">
 	<div class="modal-dialog">
@@ -89,10 +87,6 @@
 				</th>
 				<th>Actions</th>
 				<th></th>
-				@*<th>Edit</th>
-					<th>Details</th>
-					<th>Delete</th>
-					<th>Issues</th>*@
 			</tr>
 		</thead>
 		<tbody>
@@ -150,7 +144,6 @@
 </div>
 
 <input type="hidden" id="selectBookId" />
-
 @section scripts{
 	<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
@@ -180,9 +173,9 @@
 				fixedHeader: true
 			});
 		});
+
 		function btnDelete() {
 			var deleteBookIdValue = $("#selectBookId").val();
-
 			$.ajax({
 				type: "DELETE",				
 				url: 'https://localhost:44369/api/ServiceBooks/' + deleteBookIdValue,		
@@ -196,23 +189,22 @@
 			   else {
 				alert("something went wrong");
 			    }
+		    }
+	     });
 		}
-	});
-}
-
-function btnCancel() {
-	window.location.href = "";
-}
-
-function btnOk() {
-	location.reload();
-}
-
-function Confirm(id) {
-	$("#selectBookId").val(id);
-	$("#deleteModal").modal('show');
-}
-
-	</script>
+		function btnCancel()
+		{
+			window.location.href = "";
+		}
+		function btnOk()
+		{
+			location.reload();
+		}
+		function Confirm(id)
+		{
+			$("#selectBookId").val(id);
+			$("#deleteModal").modal('show');
+		}
+		</script>
 }
 

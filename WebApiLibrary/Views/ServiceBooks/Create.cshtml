@@ -75,7 +75,6 @@
 	</div>
 </div>
 
-
 <div class="container">
 	<form name="createBookForm" id="createBook" class="form-horizontal">
 		<div class="form-group">
@@ -98,9 +97,7 @@
 							</button>
 						</td>
 					</tr>
-				</table>
-				@Html.ValidationMessageFor(model => model.book.serviceAuthorName, "", new { @class = "text-danger" })
-			
+				</table>			
 		</div>		
 		<div class="form-group">
 			<label class="text-info">Serial Number</label>
@@ -143,12 +140,10 @@
 				</tr>
 			</table>
 			@Html.ValidationMessageFor(model => model.book.servicePublications, "", new { @class = "text-danger" })
-
 		</div>
 		<div class="form-group">
 			<label for="isAvailable" class="text-info"> Is Available </label>
 			<input type="checkbox" id="isAvailable" name="isAvailable">
-
 		</div>
 		<button type="submit" class="btn btn-default">Create</button>
 		<br /><br />
@@ -157,6 +152,7 @@
 		<button class="btn btn-primary">@Html.ActionLink("Back to List", "Index", new { @style = "color:#FFFFFF;" })</button>
 	</div>
 </div>
+
 @section Scripts {
 	<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 	<script>
@@ -192,6 +188,7 @@
 					alert('dropdown error');
 				}
 			});
+
 			var publication = $('#publication');
 			publication.append($("<option></option>").val('').html('Please Select Publication'));
 			$.ajax({
@@ -241,6 +238,7 @@
 				});
 			});
 		});  
+
 		function NewAuthor() {
 			$("#newAuthorModal").modal('show');
 		}
